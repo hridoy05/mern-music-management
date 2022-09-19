@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { SetUser } from "../redux/userSlice";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
+import Layout from "./Layout";
 
 
 function ProtectedRoute({ children }) {
@@ -17,7 +18,7 @@ function ProtectedRoute({ children }) {
     try {
       dispatch(ShowLoading())
       const response = await axios.post(
-        "/api/users/get-user-data",
+        "http://localhost:5500/api/v1/get-user-data",
         {},
         {
           headers: {
@@ -46,7 +47,7 @@ function ProtectedRoute({ children }) {
     }
   }, []);
 
-  return <div>{readyToRender && children}</div>;
+  return <div>{readyToRender && <Layout>{children}</Layout>}</div>;
 }
 
 export default ProtectedRoute;
