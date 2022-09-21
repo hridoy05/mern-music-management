@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { Toaster } from "react-hot-toast";
+import AdminHome from "./pages/admin/AdminHome";
 function App() {
   const { loading } = useSelector((state) => state.alerts);
   return (
@@ -36,6 +37,14 @@ function App() {
             element={
               <PublicRoute>
                 <Register />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <PublicRoute>
+                <AdminHome />
               </PublicRoute>
             }
           />

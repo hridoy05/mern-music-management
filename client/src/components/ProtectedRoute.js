@@ -46,6 +46,7 @@ function ProtectedRoute({ children }) {
       getUserData();
     }
   }, []);
+  
 
   return <div>{readyToRender && <Layout>{children}</Layout>}</div>;
 }
