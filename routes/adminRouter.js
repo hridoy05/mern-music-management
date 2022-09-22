@@ -60,5 +60,44 @@ adminRouter.post(
   }
 );
 
+adminRouter.post(
+  "/edit-song",
+  requireSign,
+  upload.single("file"),
+  async (req, res) => {
+    try {
+      let response = null;
+      if (req.file) {
+        response = await cloudinary.v2.uploader.upload(req.file.path, {
+          folder: "banikMusic",
+          use_filename: true,
+          resource_type: "raw",
+        });
+      }
+      await Song.findByIdAndUpdate(req.body._id, {
+        title: req.body.title,
+        artist: req.body.artist,
+        src: response ? response.url : req.body.src,
+        album: req.body.album,
+        duration: req.body.duration,
+        year: req.body.year,
+      });
+      const allSongs = await Song.find();
+      res.status(200).send({
+        message: "Song edited successfully",
+        success: true,
+        data: allSongs,
+      });
+    } catch (error) {
+      res.status(500).send({
+        message: "Error adding song",
+        success: false,
+        data: error,
+      });
+    }
+  }
+);
+
+
 
 module.exports = adminRouter

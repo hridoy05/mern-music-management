@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { SetAllSongs } from "../../redux/userSlice";
 
 function AddEditSong() {
-  const { user } = useSelector((state) => state.user);
+  const { allSongs, user } = useSelector((state) => state.user);
   const urlParams = new URLSearchParams(window.location.search);
   const songId = urlParams.get("id");
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ function AddEditSong() {
       Object.keys(song).forEach((key) => {
         formData.append(key, song[key]);
       });
-      const response = await axios.post("http://localhost:5500/api/v1/admin/add-song", formData, {
+      const response = await axios.post("/api/admin/add-song", formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -56,12 +56,38 @@ function AddEditSong() {
 
   const onEdit = async () => {
     try {
-        
+      dispatch(ShowLoading());
+      const formData = new FormData();
+      Object.keys(song).forEach((key) => {
+        formData.append(key, song[key]);
+      });
+      formData.append("_id", songId);
+      const response = await axios.post("/api/admin/edit-song", formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      dispatch(HideLoading());
+      if (response.data.success) {
+        toast.success("Song updated successfully");
+        dispatch(SetAllSongs(response.data.data));
+        navigate("/admin");
+      } else {
+        toast.error(response.data.message);
+      }
     } catch (error) {
       dispatch(HideLoading());
       toast.error("Something went wrong");
     }
   };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (songId && songId !== "") {
+      const existingSong = allSongs.find((s) => s._id === songId);
+      setSong(existingSong);
+    }
+  }, [allSongs, songId]);
 
   useEffect(() => {
     if (user) {

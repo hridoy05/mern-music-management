@@ -1,19 +1,24 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-const AdminHome = () => {
+function AdminHome() {
+  //const [selectedSongForEdit, setSelectedSongForEdit] = React.useState(null);
+  const { allSongs, user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
-    const {allSongs, user} = useSelector((state)=> state.user)
-    const navigate = useNavigate()
-    useEffect(()=> {
-        if((user && user?.isAdmin && !user.isAdmin) || !user?.isAdmin){
-            navigate('/')
-        }
-    })
-    return (
-        <div>
+  useEffect(() => {
+    if(user)
+    {
+      if ((user?.isAdmin && !user.isAdmin) || !user?.isAdmin) {
+        navigate("/");
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  return (
+    <div>
       <div className="flex justify-between">
         <h1 className="text-3xl text-gray-700">All Songs</h1>
         <button
@@ -36,7 +41,7 @@ const AdminHome = () => {
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody className='w-full'>
+        <tbody>
           {allSongs.map((song) => (
             <tr key={song.id}>
               <td>{song.title}</td>
@@ -57,7 +62,7 @@ const AdminHome = () => {
         </tbody>
       </table>
     </div>
-    );
-};
+  );
+}
 
 export default AdminHome;
