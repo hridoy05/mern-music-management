@@ -36,7 +36,7 @@ const AdminHome = () => {
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='w-full'>
           {allSongs.map((song) => (
             <tr key={song.id}>
               <td>{song.title}</td>

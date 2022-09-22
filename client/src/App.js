@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { Toaster } from "react-hot-toast";
 import AdminHome from "./pages/admin/AdminHome";
+import AddEditSong from "./pages/admin/AddEditSong";
 function App() {
   const { loading } = useSelector((state) => state.alerts);
   return (
@@ -43,9 +44,17 @@ function App() {
           <Route
             path="/admin"
             element={
-              <PublicRoute>
+              <ProtectedRoute>
                 <AdminHome />
-              </PublicRoute>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/add-edit-song"
+            element={
+              <ProtectedRoute>
+                <AddEditSong />
+              </ProtectedRoute>
             }
           />
         </Routes>
