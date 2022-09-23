@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { Toaster } from "react-hot-toast";
+import CreateEditPlaylist from "./pages/CreateEditPlaylist";
 import AdminHome from "./pages/admin/AdminHome";
 import AddEditSong from "./pages/admin/AddEditSong";
 function App() {
@@ -41,6 +42,16 @@ function App() {
               </PublicRoute>
             }
           />
+
+          <Route
+            path="/create-edit-playlist"
+            element={
+              <ProtectedRoute>
+                <CreateEditPlaylist />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="/admin"
             element={
@@ -63,4 +74,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

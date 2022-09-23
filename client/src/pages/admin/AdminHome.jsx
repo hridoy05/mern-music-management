@@ -14,8 +14,8 @@ function AdminHome() {
         navigate("/");
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  
+  }, [navigate, user]);
 
   return (
     <div>

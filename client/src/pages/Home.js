@@ -1,7 +1,7 @@
 import React from "react";
 import SongsList from "../components/SongsList";
-//import Playlists from "../components/Playlists";
-//import Player from "../components/Player";
+import Playlists from "../components/Playlists";
+import Player from "../components/Player";
 
 function Home() {
   return (
@@ -11,10 +11,10 @@ function Home() {
           <SongsList />
         </div>
         <div className="w-1/2">
-          {/* <Playlists /> */}
+          <Playlists />
         </div>
       </div>
-      {/* <Player /> */}
+      <Player />
     </>
   );
 }
